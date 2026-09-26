@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spoken English Pro</title>
+<style>
+  body{font-family:system-ui,Arial;background:#f0f0ff;margin:0;padding:0;text-align:center}
+  header{background:#6C63FF;color:#fff;padding:18px;font-size:22px;font-weight:bold;border-radius:0 0 20px 20px}
+ .tabs{margin:14px 0}
+ .tab{padding:10px 18px;margin:4px;border:none;border-radius:20px;background:#ddd;font-weight:bold}
+ .active{background:#6C63FF;color:#fff}
+  #list{padding:12px;max-width:600px;margin:auto}
+ .card{background:#fff;padding:16px;border-radius:16px;box-shadow:0 4px 12px rgba(0,0,0,.1);margin:12px 0;text-align:left}
+ .eng{font-size:19px;font-weight:800}
+ .hin{color:#D32F2F;font-weight:600;margin-top:4px}
+ .mean{color:#555;font-size:13px;margin-top:4px}
+ .sp{margin-top:10px;background:#4CAF50;color:#fff;border:none;padding:7px 14px;border-radius:10px;font-weight:bold}
+</style>
+</head>
+<body>
+<header>Spoken English Pro - Bolo Confidently</header>
+<div class="tabs">
+<button class="tab active" onclick="show('vocab',this)">Advanced Vocab</button>
+<button class="tab" onclick="show('phrase',this)">Daily Phrases</button>
+<button class="tab" onclick="show('idiom',this)">Idioms</button>
+</div>
+<div id="list"></div>
+
+<script>
+let data={
+vocab:[
+{en:"Eloquent",hi:"धारा प्रवाह बोलने वाला",mean:"Fluent - She is an eloquent speaker"},
+{en:"Resilient",hi:"मजबूत / टूट कर भी जुड़ने वाला",mean:"Strong inside - Be resilient in life"},
+{en:"Diligent",hi:"मेहनती",mean:"Hardworking - He is very diligent"},
+{en:"Ambiguous",hi:"अस्पष्ट",mean:"Not clear - His answer was ambiguous"},
+{en:"Empathy",hi:"सहानुभूति",mean:"Feeling others pain"},
+{en:"Meticulous",hi:"बारीक काम करने वाला",mean:"Very careful - She is meticulous"},
+{en:"Optimistic",hi:"आशावादी",mean:"Positive thinking"},
+{en:"Pragmatic",hi:"व्यावहारिक",mean:"Practical person"}
+],
+phrase:[
+{en:"How's it going?",hi:"क्या हाल है?",mean:"Casual Hello"},
+{en:"Hang in there!",hi:"हिम्मत रखो",mean:"Don't give up"},
+{en:"It's up to you",hi:"तुम्हारे ऊपर है",mean:"Your choice"},
+{en:"Long time no see",hi:"बहुत दिन बाद मिले",mean:"After a long time"},
+{en:"Keep me posted",hi:"बताते रहना",mean:"Inform me"},
+{en:"That makes sense",hi:"यह समझ आता है",mean:"I understood"}
+],
+idiom:[
+{en:"Piece of cake",hi:"बहुत आसान",mean:"Very easy - Exam was a piece of cake"},
+{en:"Break a leg",hi:"शुभकामनाएँ / Best of luck",mean:"Good luck"},
+{en:"Under the weather",hi:"तबियत खराब होना",mean:"I am under the weather today"},
+{en:"Hit the books",hi:"पढ़ाई में लग जाना",mean:"Study hard"},
+{en:"Spill the beans",hi:"राज खोल देना",mean:"Tell the secret"},
+{en:"Cost an arm and a leg",hi:"बहुत महंगा",mean:"Very expensive"}
+]
+};
+
+function show(type,el){
+ document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+ el.classList.add('active');
+ render(type);
+}
+function render(type){
+ type=type||'vocab';
+ let h='';
+ data[type].forEach(i=>{
+   h+=`<div class="card"><div class="eng">${i.en}</div><div class="hin">${i.hi}</div><div class="mean">${i.mean}</div><button class="sp" onclick="speak('${i.en.replace(/'/g,"")}')">🔊 Bolo</button></div>`;
+ });
+ document.getElementById('list').innerHTML=h;
+}
+function speak(t){
+ let m=new SpeechSynthesisUtterance(t);
+ m.lang='en-US'; m.rate=0.9;
+ speechSynthesis.speak(m);
+}
+render('vocab');
+</script>
+</body>
+</html>
